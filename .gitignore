@@ -30,14 +30,10 @@ venv/
 Thumbs.db
 
 # Pipeline runtime artefacts (regenerated from Supabase on each run)
-pipeline/data_raw/
-pipeline/data_processed/
-pipeline/data_proprietary/
-pipeline/models_cache/
-pipeline/clean_pipeline/data/raw/
-pipeline/clean_pipeline/data/proprietary/
-pipeline/clean_pipeline/data/processed/*.parquet
-!pipeline/clean_pipeline/data/processed/acceptance_rates*.parquet
+pipeline/data/raw/
+pipeline/data/processed/
+pipeline/data/proprietary/
+pipeline/data/models_cache/
 
 # Logs
 *.log

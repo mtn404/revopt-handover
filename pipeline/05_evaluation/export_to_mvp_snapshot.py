@@ -1,7 +1,7 @@
 """
 Convert clean-pipeline outputs into the MVP dashboard's snapshot.json schema.
 
-Output: ../revopt-mvp/data/snapshot.json
+Output: ../../data/snapshot.json (repo-root data/, env var MVP_SNAPSHOT_OUT overrides)
 """
 import json, sys
 from datetime import datetime, timedelta, timezone
@@ -17,7 +17,7 @@ PROC  = HERE.parent / "data" / "processed"
 # MVP repo's data/snapshot.json regardless of the vendored layout.
 import os as _os
 _env_out = _os.environ.get("MVP_SNAPSHOT_OUT", "").strip()
-OUT   = Path(_env_out) if _env_out else (HERE.parent.parent / "revopt-mvp" / "data" / "snapshot.json")
+OUT   = Path(_env_out) if _env_out else (HERE.parent.parent / "data" / "snapshot.json")
 
 # Load clean pipeline outputs
 lp_rev    = pd.read_parquet(PROC / "lp_v6_ensemble_revenue.parquet",   engine="fastparquet")

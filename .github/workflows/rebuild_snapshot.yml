@@ -27,12 +27,12 @@ jobs:
         with:
           python-version: "3.13"
           cache: "pip"
-          cache-dependency-path: pipeline/requirements_full.txt
+          cache-dependency-path: requirements_full.txt
 
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install -r pipeline/requirements_full.txt
+          pip install -r requirements_full.txt
 
       - name: Pull parquets + supporting state from Supabase
         env:
@@ -45,8 +45,8 @@ jobs:
           from pathlib import Path
           sys.path.insert(0, 'pipeline')
           from supabase_io import sync_down, PARQUET_FILES, PROPRIETARY_FILES
-          PROC = Path('pipeline/clean_pipeline/data/processed')
-          PROP = Path('pipeline/clean_pipeline/data/proprietary')
+          PROC = Path('pipeline/data/processed')
+          PROP = Path('pipeline/data/proprietary')
           r1 = sync_down(PROC, 'parquets', PARQUET_FILES)
           r2 = sync_down(PROP, 'proprietary', PROPRIETARY_FILES)
           print(f'  parquets    : {sum(r1.values())}/{len(PARQUET_FILES)}')
@@ -61,7 +61,7 @@ jobs:
           MVP_SNAPSHOT_OUT:          ${{ github.workspace }}/data/snapshot.json
         run: |
           mkdir -p data
-          python pipeline/clean_pipeline/05_eval/export_to_mvp_snapshot.py
+          python pipeline/05_evaluation/export_to_mvp_snapshot.py
 
       - name: Mark snapshot as live
         run: |

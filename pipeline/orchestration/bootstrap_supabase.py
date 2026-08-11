@@ -27,12 +27,14 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-HERE       = Path(__file__).resolve().parent
-REPO       = HERE.parent
-CLEAN_PIPE = REPO.parent / "clean-pipeline"
-PROCESSED  = CLEAN_PIPE / "data" / "processed"
-PROP       = CLEAN_PIPE / "data" / "proprietary"
-RAW        = CLEAN_PIPE / "data" / "raw"
+HERE       = Path(__file__).resolve().parent   # pipeline/orchestration/
+STAGES     = HERE.parent                        # pipeline/
+REPO       = STAGES.parent                      # repo root
+DATA       = STAGES / "data"
+PROCESSED  = DATA / "processed"
+PROP       = DATA / "proprietary"
+RAW        = DATA / "raw"
+INGESTION  = STAGES / "01_ingestion"
 SNAPSHOT   = REPO / "data" / "snapshot.json"
 
 # Raw CSV upload size cap — skip BOALF (~2.4 GB) to stay in free tier
@@ -116,7 +118,7 @@ def ensure_boalf_aggregates():
     import subprocess, sys as _sys
     res = subprocess.run([
         _sys.executable,
-        str(HERE / "aggregate_boalf.py"),
+        str(INGESTION / "aggregate_boalf.py"),
         "--mode", "bootstrap",
         "--raw",  str(raw_boalf),
         "--out",  str(agg_boalf),

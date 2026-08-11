@@ -2,7 +2,7 @@
 Export the rolling 7-day forecast horizon JSON consumed by /forecasts page.
 
 Reads the 4 model prediction parquets + Model A's daily aggregates and
-produces ../revopt-mvp/data/forecasts_7day.json with:
+produces ../../data/forecasts_7day.json (repo-root data/, env var MVP_FORECASTS_OUT overrides):
 
   days[]                  per-day daily aggregates for the rolling 7-day horizon
     date, label           (e.g. "2026-06-08", "Mon")
@@ -30,7 +30,7 @@ HERE  = Path(__file__).resolve().parent
 PROC  = HERE.parent / "data" / "processed"
 
 _env_out = os.environ.get("MVP_FORECASTS_OUT", "").strip()
-OUT = Path(_env_out) if _env_out else (HERE.parent.parent / "revopt-mvp" / "data" / "forecasts_7day.json")
+OUT = Path(_env_out) if _env_out else (HERE.parent.parent / "data" / "forecasts_7day.json")
 
 PRODUCTS = ["dch", "dcl", "dmh", "dml", "drh", "drl", "ffr"]
 HORIZON_DAYS = 7

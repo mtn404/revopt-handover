@@ -26,12 +26,15 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-HERE        = Path(__file__).resolve().parent
-REPO_ROOT   = HERE.parent
+HERE        = Path(__file__).resolve().parent     # pipeline/orchestration/
+STAGES      = HERE.parent                          # pipeline/
+REPO_ROOT   = STAGES.parent                        # repo root
 SNAPSHOT    = REPO_ROOT / "data" / "snapshot.json"
-PROCESSED   = HERE / "data_processed"
-MODELS      = HERE / "models_cache"
-PROP        = HERE / "data_proprietary"
+DATA        = STAGES / "data"
+PROCESSED   = DATA / "processed"
+MODELS      = DATA / "models_cache"
+PROP        = DATA / "proprietary"
+INGESTION   = STAGES / "01_ingestion"
 
 # Required artifacts for full LIVE mode
 REQUIRED_MODELS = [
@@ -135,7 +138,7 @@ def step_pull_public() -> bool:
     log("STEP 1: pull last 14 days of public data (BMRS + NESO + CI)")
     try:
         subprocess.check_call(
-            [sys.executable, str(HERE / "pull_incremental.py"), "--days", "14"]
+            [sys.executable, str(INGESTION / "pull_incremental.py"), "--days", "14"]
         )
         return True
     except Exception as ex:
@@ -152,7 +155,7 @@ def step_run_live_pipeline() -> bool:
     #   1. Update master.parquet tail with last 14 days of fresh data
     #   2. Load cached models from models_cache/, predict for tomorrow
     #   3. Solve LP for next 7 days, commit Day 1 to dispatch/revenue parquets
-    #   4. Run 05_eval/export_to_mvp_snapshot.py to refresh snapshot.json
+    #   4. Run 05_evaluation/export_to_mvp_snapshot.py to refresh snapshot.json
     return False
 
 

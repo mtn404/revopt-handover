@@ -17,7 +17,7 @@ End-to-end:
         - 03_models/retrain_model_d.py
         - 04_optimiser/lp_v6_ensemble.py
         - 04_optimiser/compute_pf_v6.py
-        - 05_eval/export_to_mvp_snapshot.py     writes data/snapshot.json
+        - 05_evaluation/export_to_mvp_snapshot.py  writes data/snapshot.json
   5.  Stamp snapshot.json: pipeline_mode = "live", last_retrained = today
   6.  Push refreshed state back to Supabase
   7.  Exit so the calling workflow can git-commit the new snapshot.
@@ -37,17 +37,28 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-HERE             = Path(__file__).resolve().parent
-REPO_ROOT        = HERE.parent
-CLEAN_PIPE       = HERE / "clean_pipeline"
-CP_DATA          = CLEAN_PIPE / "data"
+# Layout (after restructure):
+#   pipeline/
+#     orchestration/   ← this file lives here
+#     01_ingestion/    ← pull_incremental, pull_phase2_features, aggregate_boalf
+#     02_master/       ← build_master
+#     03_models/       ← model A/B/C/D retrain + ensemble
+#     04_optimiser/    ← LP v6 + PF v6
+#     05_evaluation/   ← snapshot + forecast exporters
+#     data/            ← raw/, processed/, proprietary/  (gitignored runtime)
+HERE             = Path(__file__).resolve().parent          # pipeline/orchestration/
+STAGES           = HERE.parent                              # pipeline/
+REPO_ROOT        = STAGES.parent                            # repo root
+CP_DATA          = STAGES / "data"
 CP_RAW           = CP_DATA / "raw"
 CP_PROCESSED     = CP_DATA / "processed"
 CP_PROPRIETARY   = CP_DATA / "proprietary"
 SNAPSHOT         = REPO_ROOT / "data" / "snapshot.json"
 
+INGESTION        = STAGES / "01_ingestion"
+
 # Where pull_incremental.py writes (separate from vendored, copied to CP_RAW)
-RAW_INCREMENTAL  = HERE / "data_raw"
+RAW_INCREMENTAL  = CP_RAW
 
 # Python interpreter to use for vendored scripts
 PY = sys.executable
@@ -71,7 +82,7 @@ def step_setup_dirs():
 
 
 def step_supabase_pull():
-    """Download persisted state from Supabase → clean_pipeline/data/*."""
+    """Download persisted state from Supabase → pipeline/data/*."""
     log("STEP 1: pull state from Supabase")
     if not have_supabase_creds():
         log("  ! no Supabase creds — running on local state only")
@@ -114,7 +125,7 @@ def step_pull_incremental():
     env = os.environ.copy()
     env["PIPELINE_RAW_DIR"] = str(CP_RAW)
     res = subprocess.run(
-        [PY, str(HERE / "pull_incremental.py"), "--days", "30"],
+        [PY, str(INGESTION / "pull_incremental.py"), "--days", "30"],
         env=env, check=False
     )
     if res.returncode != 0:
@@ -122,7 +133,7 @@ def step_pull_incremental():
 
     # Phase 2 supplementary features (interconnector net flow + extended
     # system-prices). Run after the main pull so the same window aligns.
-    p2_script = HERE / "pull_phase2_features.py"
+    p2_script = INGESTION / "pull_phase2_features.py"
     if p2_script.exists():
         log("STEP 2a-ii: pull Phase 2 features (IC flows + BSAD adjustments)")
         res2 = subprocess.run(
@@ -145,7 +156,7 @@ def step_refresh_boalf():
     start     = yesterday - _td(days=29)
 
     # Pull raw BOALF for the window
-    sys.path.insert(0, str(HERE))
+    sys.path.insert(0, str(INGESTION))
     from pull_incremental import pull_bmrs_boalf
     # pull_incremental writes to PIPELINE_RAW_DIR (=CP_RAW)
     os.environ["PIPELINE_RAW_DIR"] = str(CP_RAW)
@@ -156,7 +167,7 @@ def step_refresh_boalf():
 
     # Run the aggregator in incremental mode
     agg_path = CP_RAW / "boalf_aggregates.csv"
-    cmd = [PY, str(HERE / "aggregate_boalf.py"),
+    cmd = [PY, str(INGESTION / "aggregate_boalf.py"),
            "--mode", "incremental",
            "--raw",  str(raw_chunk),
            "--out",  str(agg_path),
@@ -190,7 +201,7 @@ def pick_live_end_date() -> str:
 
 def run_step(name: str, script_rel: str, env: dict) -> bool:
     """Invoke a vendored script as a subprocess."""
-    script = CLEAN_PIPE / script_rel
+    script = STAGES / script_rel
     log(f"  ► {name}  ({script.relative_to(REPO_ROOT)})")
     t_start = time.time()
     res = subprocess.run([PY, str(script)], env=env, check=False)
@@ -221,8 +232,8 @@ def step_run_pipeline(live_end: str) -> bool:
         ("model D — anc",    "03_models/retrain_model_d.py"),
         ("LP v6 ensemble",   "04_optimiser/lp_v6_ensemble.py"),
         ("PF v6 oracle",     "04_optimiser/compute_pf_v6.py"),
-        ("export snapshot",      "05_eval/export_to_mvp_snapshot.py"),
-        ("export 7-day forecasts","05_eval/export_forecasts_7day.py"),
+        ("export snapshot",      "05_evaluation/export_to_mvp_snapshot.py"),
+        ("export 7-day forecasts","05_evaluation/export_forecasts_7day.py"),
     ]
     for name, rel in sequence:
         if not run_step(name, rel, env):
