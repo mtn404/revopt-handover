@@ -1,0 +1,1284 @@
+{
+  "generated_at": "2026-07-29T21:35:44.322556Z",
+  "freshness": {
+    "last_refreshed_utc": "2026-07-29T21:35:46.482271Z",
+    "last_data_through": "2026-07-29",
+    "dispatch_date": "2026-07-29",
+    "last_retrained": "2026-07-29",
+    "pipeline_mode": "live"
+  },
+  "asset": {
+    "name": "Reference 50 MW / 100 MWh BESS",
+    "site": "London LPN HV (worked example)",
+    "p_max_mw": 50,
+    "e_max_mwh": 100,
+    "rte": 0.88,
+    "soc_carry_in_pct": 95.0
+  },
+  "kpis": {
+    "today_gross_gbp": 25330,
+    "today_vs_pf_pct": 114.8,
+    "week_pct_pf": 79.3,
+    "week_gross_gbp": 117474,
+    "ytd_gross_gbp": 3085401,
+    "ytd_per_mw_gbp": 107254,
+    "ytd_pct_pf": 84.0,
+    "rolling_12m_gross_gbp": 5099508,
+    "rolling_12m_per_mw_gbp": 101990,
+    "rolling_12m_pct_pf": 83.0,
+    "rolling_12m_full_year": true,
+    "rolling_12m_days": 365,
+    "vs_industry_median_pct": 203
+  },
+  "model_metrics": {
+    "model_a_ensemble_mae_gbp_mwh": 20.46,
+    "model_a_lear_mae_gbp_mwh": 21.39,
+    "model_b_sbp_mae_gbp_mwh": 42.19,
+    "model_c_spike_f1": 0.5229,
+    "model_c_spike_auc_roc": 0.9341,
+    "model_c_spike_auc_pr": 0.5939,
+    "model_d_anc_mae_gbp_mw_h": 2.716,
+    "current_year": 2026,
+    "current_year_metrics": {
+      "model_a_ensemble_mae": 16.89,
+      "model_b_sbp_mae": 29.72,
+      "model_c_spike_f1": 0.0172,
+      "model_c_spike_auc_roc": 0.7346,
+      "model_d_anc_mae": 1.917
+    }
+  },
+  "benchmarks": {
+    "lp_per_mw_gbp_yr": 101990,
+    "naive_da_per_mw_gbp_yr": 72283.0,
+    "modo_top_decile_per_mw_gbp_yr": 75000,
+    "modo_median_per_mw_gbp_yr": 50000,
+    "modo_source": "Modo Energy BESS Index 2024 H2 summary (publicly published)",
+    "blackhillock_per_mw_gbp_yr": 142000,
+    "blackhillock_source": "Reported in Modo Energy '2024's top performing battery' article"
+  },
+  "forecast_da_today": [
+    {
+      "period": 1,
+      "time": "23:00",
+      "price": 112.9
+    },
+    {
+      "period": 2,
+      "time": "23:30",
+      "price": 100.2
+    },
+    {
+      "period": 3,
+      "time": "00:00",
+      "price": 120.0
+    },
+    {
+      "period": 4,
+      "time": "00:30",
+      "price": 122.2
+    },
+    {
+      "period": 5,
+      "time": "01:00",
+      "price": 114.1
+    },
+    {
+      "period": 6,
+      "time": "01:30",
+      "price": 114.3
+    },
+    {
+      "period": 7,
+      "time": "02:00",
+      "price": 110.5
+    },
+    {
+      "period": 8,
+      "time": "02:30",
+      "price": 110.0
+    },
+    {
+      "period": 9,
+      "time": "03:00",
+      "price": 105.7
+    },
+    {
+      "period": 10,
+      "time": "03:30",
+      "price": 103.0
+    },
+    {
+      "period": 11,
+      "time": "04:00",
+      "price": 107.4
+    },
+    {
+      "period": 12,
+      "time": "04:30",
+      "price": 108.4
+    },
+    {
+      "period": 13,
+      "time": "05:00",
+      "price": 117.4
+    },
+    {
+      "period": 14,
+      "time": "05:30",
+      "price": 115.7
+    },
+    {
+      "period": 15,
+      "time": "06:00",
+      "price": 127.3
+    },
+    {
+      "period": 16,
+      "time": "06:30",
+      "price": 139.8
+    },
+    {
+      "period": 17,
+      "time": "07:00",
+      "price": 126.2
+    },
+    {
+      "period": 18,
+      "time": "07:30",
+      "price": 132.8
+    },
+    {
+      "period": 19,
+      "time": "08:00",
+      "price": 118.0
+    },
+    {
+      "period": 20,
+      "time": "08:30",
+      "price": 130.0
+    },
+    {
+      "period": 21,
+      "time": "09:00",
+      "price": 119.5
+    },
+    {
+      "period": 22,
+      "time": "09:30",
+      "price": 114.1
+    },
+    {
+      "period": 23,
+      "time": "10:00",
+      "price": 118.8
+    },
+    {
+      "period": 24,
+      "time": "10:30",
+      "price": 114.4
+    },
+    {
+      "period": 25,
+      "time": "11:00",
+      "price": 111.5
+    },
+    {
+      "period": 26,
+      "time": "11:30",
+      "price": 105.8
+    },
+    {
+      "period": 27,
+      "time": "12:00",
+      "price": 107.5
+    },
+    {
+      "period": 28,
+      "time": "12:30",
+      "price": 108.3
+    },
+    {
+      "period": 29,
+      "time": "13:00",
+      "price": 104.5
+    },
+    {
+      "period": 30,
+      "time": "13:30",
+      "price": 99.0
+    },
+    {
+      "period": 31,
+      "time": "14:00",
+      "price": 97.8
+    },
+    {
+      "period": 32,
+      "time": "14:30",
+      "price": 94.6
+    },
+    {
+      "period": 33,
+      "time": "15:00",
+      "price": 103.1
+    },
+    {
+      "period": 34,
+      "time": "15:30",
+      "price": 111.0
+    },
+    {
+      "period": 35,
+      "time": "16:00",
+      "price": 118.6
+    },
+    {
+      "period": 36,
+      "time": "16:30",
+      "price": 122.8
+    },
+    {
+      "period": 37,
+      "time": "17:00",
+      "price": 148.0
+    },
+    {
+      "period": 38,
+      "time": "17:30",
+      "price": 142.8
+    },
+    {
+      "period": 39,
+      "time": "18:00",
+      "price": 156.5
+    },
+    {
+      "period": 40,
+      "time": "18:30",
+      "price": 161.5
+    },
+    {
+      "period": 41,
+      "time": "19:00",
+      "price": 222.3
+    },
+    {
+      "period": 42,
+      "time": "19:30",
+      "price": 212.7
+    },
+    {
+      "period": 43,
+      "time": "20:00",
+      "price": 199.7
+    },
+    {
+      "period": 44,
+      "time": "20:30",
+      "price": 194.2
+    },
+    {
+      "period": 45,
+      "time": "21:00",
+      "price": 165.3
+    },
+    {
+      "period": 46,
+      "time": "21:30",
+      "price": 167.4
+    },
+    {
+      "period": 47,
+      "time": "22:00",
+      "price": 155.6
+    },
+    {
+      "period": 48,
+      "time": "22:30",
+      "price": 145.0
+    }
+  ],
+  "dispatch_today": [
+    {
+      "period": 1,
+      "time": "23:00",
+      "pd_mw": -0.0,
+      "pc_mw": 0.0,
+      "net_mw": -0.0,
+      "da_pos_mw": -0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 2,
+      "time": "23:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 3,
+      "time": "00:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 4,
+      "time": "00:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 5,
+      "time": "01:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 6,
+      "time": "01:30",
+      "pd_mw": -0.0,
+      "pc_mw": 0.0,
+      "net_mw": -0.0,
+      "da_pos_mw": -0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 7,
+      "time": "02:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 8,
+      "time": "02:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 9,
+      "time": "03:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 10,
+      "time": "03:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 11,
+      "time": "04:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 12,
+      "time": "04:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 13,
+      "time": "05:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 14,
+      "time": "05:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 15,
+      "time": "06:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 16,
+      "time": "06:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 17,
+      "time": "07:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 18,
+      "time": "07:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 19,
+      "time": "08:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.8,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 20,
+      "time": "08:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 21,
+      "time": "09:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.6,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 22,
+      "time": "09:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.6,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 23,
+      "time": "10:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.6,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 24,
+      "time": "10:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.5,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 25,
+      "time": "11:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.7,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 26,
+      "time": "11:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.8,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 27,
+      "time": "12:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.8,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 28,
+      "time": "12:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.7,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 29,
+      "time": "13:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.6,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 30,
+      "time": "13:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.7,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 31,
+      "time": "14:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.7,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 32,
+      "time": "14:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.8,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 33,
+      "time": "15:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.8,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 34,
+      "time": "15:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.8,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 35,
+      "time": "16:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.9,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 36,
+      "time": "16:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.8,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 37,
+      "time": "17:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.7,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 38,
+      "time": "17:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.7,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 39,
+      "time": "18:00",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.5,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 40,
+      "time": "18:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 1.6,
+      "soc_pct": 95.0
+    },
+    {
+      "period": 41,
+      "time": "19:00",
+      "pd_mw": 22.8,
+      "pc_mw": 0.0,
+      "net_mw": 22.8,
+      "da_pos_mw": 24.4,
+      "soc_pct": 82.9
+    },
+    {
+      "period": 42,
+      "time": "19:30",
+      "pd_mw": 22.8,
+      "pc_mw": 0.0,
+      "net_mw": 22.8,
+      "da_pos_mw": 24.3,
+      "soc_pct": 70.7
+    },
+    {
+      "period": 43,
+      "time": "20:00",
+      "pd_mw": 22.8,
+      "pc_mw": 0.0,
+      "net_mw": 22.8,
+      "da_pos_mw": 24.3,
+      "soc_pct": 58.6
+    },
+    {
+      "period": 44,
+      "time": "20:30",
+      "pd_mw": 22.8,
+      "pc_mw": 0.0,
+      "net_mw": 22.8,
+      "da_pos_mw": 24.4,
+      "soc_pct": 46.4
+    },
+    {
+      "period": 45,
+      "time": "21:00",
+      "pd_mw": 22.8,
+      "pc_mw": 0.0,
+      "net_mw": 22.8,
+      "da_pos_mw": 24.2,
+      "soc_pct": 34.3
+    },
+    {
+      "period": 46,
+      "time": "21:30",
+      "pd_mw": 22.8,
+      "pc_mw": 0.0,
+      "net_mw": 22.8,
+      "da_pos_mw": 24.1,
+      "soc_pct": 22.1
+    },
+    {
+      "period": 47,
+      "time": "22:00",
+      "pd_mw": 22.8,
+      "pc_mw": 0.0,
+      "net_mw": 22.8,
+      "da_pos_mw": 22.8,
+      "soc_pct": 10.0
+    },
+    {
+      "period": 48,
+      "time": "22:30",
+      "pd_mw": 0.0,
+      "pc_mw": 0.0,
+      "net_mw": 0.0,
+      "da_pos_mw": 0.0,
+      "soc_pct": 10.0
+    }
+  ],
+  "ancillary_bids_today": [
+    {
+      "product": "DC-H",
+      "name": "Dynamic Containment High",
+      "direction": "high",
+      "blocks": [
+        {
+          "block": 1,
+          "window": "23:00-03:00",
+          "mw": 50,
+          "price": 0.65
+        },
+        {
+          "block": 2,
+          "window": "03:00-07:00",
+          "mw": 50,
+          "price": 0.91
+        },
+        {
+          "block": 3,
+          "window": "07:00-11:00",
+          "mw": 50,
+          "price": 0.64
+        },
+        {
+          "block": 4,
+          "window": "11:00-15:00",
+          "mw": 50,
+          "price": 3.98
+        },
+        {
+          "block": 5,
+          "window": "15:00-19:00",
+          "mw": 0,
+          "price": 3.27
+        },
+        {
+          "block": 6,
+          "window": "19:00-23:00",
+          "mw": 50,
+          "price": 0.35
+        }
+      ]
+    },
+    {
+      "product": "DC-L",
+      "name": "Dynamic Containment Low",
+      "direction": "low",
+      "blocks": [
+        {
+          "block": 1,
+          "window": "23:00-03:00",
+          "mw": 0,
+          "price": 2.34
+        },
+        {
+          "block": 2,
+          "window": "03:00-07:00",
+          "mw": 0,
+          "price": 2.03
+        },
+        {
+          "block": 3,
+          "window": "07:00-11:00",
+          "mw": 0,
+          "price": 3.62
+        },
+        {
+          "block": 4,
+          "window": "11:00-15:00",
+          "mw": 0,
+          "price": 2.55
+        },
+        {
+          "block": 5,
+          "window": "15:00-19:00",
+          "mw": 0,
+          "price": 3.9
+        },
+        {
+          "block": 6,
+          "window": "19:00-23:00",
+          "mw": 0,
+          "price": 5.88
+        }
+      ]
+    },
+    {
+      "product": "DM-H",
+      "name": "Dynamic Moderation High",
+      "direction": "high",
+      "blocks": [
+        {
+          "block": 1,
+          "window": "23:00-03:00",
+          "mw": 0,
+          "price": -3.02
+        },
+        {
+          "block": 2,
+          "window": "03:00-07:00",
+          "mw": 0,
+          "price": -2.99
+        },
+        {
+          "block": 3,
+          "window": "07:00-11:00",
+          "mw": 0,
+          "price": -1.09
+        },
+        {
+          "block": 4,
+          "window": "11:00-15:00",
+          "mw": 0,
+          "price": 2.64
+        },
+        {
+          "block": 5,
+          "window": "15:00-19:00",
+          "mw": 50,
+          "price": 3.82
+        },
+        {
+          "block": 6,
+          "window": "19:00-23:00",
+          "mw": 0,
+          "price": -3.0
+        }
+      ]
+    },
+    {
+      "product": "DM-L",
+      "name": "Dynamic Moderation Low",
+      "direction": "low",
+      "blocks": [
+        {
+          "block": 1,
+          "window": "23:00-03:00",
+          "mw": 0,
+          "price": 7.8
+        },
+        {
+          "block": 2,
+          "window": "03:00-07:00",
+          "mw": 0,
+          "price": 6.15
+        },
+        {
+          "block": 3,
+          "window": "07:00-11:00",
+          "mw": 0,
+          "price": 8.06
+        },
+        {
+          "block": 4,
+          "window": "11:00-15:00",
+          "mw": 0,
+          "price": 5.59
+        },
+        {
+          "block": 5,
+          "window": "15:00-19:00",
+          "mw": 0,
+          "price": 8.4
+        },
+        {
+          "block": 6,
+          "window": "19:00-23:00",
+          "mw": 0,
+          "price": 10.59
+        }
+      ]
+    },
+    {
+      "product": "DR-H",
+      "name": "Dynamic Regulation High",
+      "direction": "high",
+      "blocks": [
+        {
+          "block": 1,
+          "window": "23:00-03:00",
+          "mw": 0,
+          "price": -13.6
+        },
+        {
+          "block": 2,
+          "window": "03:00-07:00",
+          "mw": 0,
+          "price": -13.03
+        },
+        {
+          "block": 3,
+          "window": "07:00-11:00",
+          "mw": 0,
+          "price": -13.67
+        },
+        {
+          "block": 4,
+          "window": "11:00-15:00",
+          "mw": 0,
+          "price": -7.72
+        },
+        {
+          "block": 5,
+          "window": "15:00-19:00",
+          "mw": 0,
+          "price": -4.11
+        },
+        {
+          "block": 6,
+          "window": "19:00-23:00",
+          "mw": 0,
+          "price": -13.77
+        }
+      ]
+    },
+    {
+      "product": "DR-L",
+      "name": "Dynamic Regulation Low",
+      "direction": "low",
+      "blocks": [
+        {
+          "block": 1,
+          "window": "23:00-03:00",
+          "mw": 50,
+          "price": 18.91
+        },
+        {
+          "block": 2,
+          "window": "03:00-07:00",
+          "mw": 50,
+          "price": 11.84
+        },
+        {
+          "block": 3,
+          "window": "07:00-11:00",
+          "mw": 50,
+          "price": 17.39
+        },
+        {
+          "block": 4,
+          "window": "11:00-15:00",
+          "mw": 50,
+          "price": 12.81
+        },
+        {
+          "block": 5,
+          "window": "15:00-19:00",
+          "mw": 50,
+          "price": 17.86
+        },
+        {
+          "block": 6,
+          "window": "19:00-23:00",
+          "mw": 27,
+          "price": 26.62
+        }
+      ]
+    },
+    {
+      "product": "FFR",
+      "name": "Firm Frequency Response (legacy)",
+      "direction": "high",
+      "blocks": [
+        {
+          "block": 1,
+          "window": "23:00-03:00",
+          "mw": 0,
+          "price": 0.0
+        },
+        {
+          "block": 2,
+          "window": "03:00-07:00",
+          "mw": 0,
+          "price": 0.0
+        },
+        {
+          "block": 3,
+          "window": "07:00-11:00",
+          "mw": 0,
+          "price": 0.0
+        },
+        {
+          "block": 4,
+          "window": "11:00-15:00",
+          "mw": 0,
+          "price": 0.0
+        },
+        {
+          "block": 5,
+          "window": "15:00-19:00",
+          "mw": 0,
+          "price": 0.0
+        },
+        {
+          "block": 6,
+          "window": "19:00-23:00",
+          "mw": 0,
+          "price": 0.0
+        }
+      ]
+    }
+  ],
+  "ytd_revenue_by_month": [
+    {
+      "month": "2026-02",
+      "revenue": 345300,
+      "pf": 380427
+    },
+    {
+      "month": "2026-03",
+      "revenue": 456940,
+      "pf": 575518
+    },
+    {
+      "month": "2026-04",
+      "revenue": 463194,
+      "pf": 561164
+    },
+    {
+      "month": "2026-05",
+      "revenue": 463232,
+      "pf": 519857
+    },
+    {
+      "month": "2026-06",
+      "revenue": 497413,
+      "pf": 619485
+    },
+    {
+      "month": "2026-07",
+      "revenue": 463847,
+      "pf": 536786,
+      "partial": true,
+      "days_so_far": 29
+    }
+  ],
+  "revenue_daily_last_30d": [
+    {
+      "date": "2026-06-30",
+      "weekday": "Tue",
+      "realised": 27579,
+      "pf": 22129,
+      "da": 19305
+    },
+    {
+      "date": "2026-07-01",
+      "weekday": "Wed",
+      "realised": 19742,
+      "pf": 16521,
+      "da": 13819
+    },
+    {
+      "date": "2026-07-02",
+      "weekday": "Thu",
+      "realised": 17952,
+      "pf": 18471,
+      "da": 12566
+    },
+    {
+      "date": "2026-07-03",
+      "weekday": "Fri",
+      "realised": 13522,
+      "pf": 20806,
+      "da": 9465
+    },
+    {
+      "date": "2026-07-04",
+      "weekday": "Sat",
+      "realised": 18255,
+      "pf": 17652,
+      "da": 12778
+    },
+    {
+      "date": "2026-07-05",
+      "weekday": "Sun",
+      "realised": 10037,
+      "pf": 26863,
+      "da": 7025
+    },
+    {
+      "date": "2026-07-06",
+      "weekday": "Mon",
+      "realised": 15173,
+      "pf": 19042,
+      "da": 10621
+    },
+    {
+      "date": "2026-07-07",
+      "weekday": "Tue",
+      "realised": 17733,
+      "pf": 18269,
+      "da": 12413
+    },
+    {
+      "date": "2026-07-08",
+      "weekday": "Wed",
+      "realised": 17654,
+      "pf": 13105,
+      "da": 12357
+    },
+    {
+      "date": "2026-07-09",
+      "weekday": "Thu",
+      "realised": 15365,
+      "pf": 20190,
+      "da": 10755
+    },
+    {
+      "date": "2026-07-10",
+      "weekday": "Fri",
+      "realised": 24124,
+      "pf": 19004,
+      "da": 16886
+    },
+    {
+      "date": "2026-07-11",
+      "weekday": "Sat",
+      "realised": 14893,
+      "pf": 13547,
+      "da": 10425
+    },
+    {
+      "date": "2026-07-12",
+      "weekday": "Sun",
+      "realised": 14353,
+      "pf": 17616,
+      "da": 10047
+    },
+    {
+      "date": "2026-07-13",
+      "weekday": "Mon",
+      "realised": 8275,
+      "pf": 20621,
+      "da": 5792
+    },
+    {
+      "date": "2026-07-14",
+      "weekday": "Tue",
+      "realised": 13788,
+      "pf": 12087,
+      "da": 9651
+    },
+    {
+      "date": "2026-07-15",
+      "weekday": "Wed",
+      "realised": 22265,
+      "pf": 4508,
+      "da": 15585
+    },
+    {
+      "date": "2026-07-16",
+      "weekday": "Thu",
+      "realised": 14475,
+      "pf": 33362,
+      "da": 10132
+    },
+    {
+      "date": "2026-07-17",
+      "weekday": "Fri",
+      "realised": 16526,
+      "pf": 16766,
+      "da": 11568
+    },
+    {
+      "date": "2026-07-18",
+      "weekday": "Sat",
+      "realised": 15075,
+      "pf": 14238,
+      "da": 10552
+    },
+    {
+      "date": "2026-07-19",
+      "weekday": "Sun",
+      "realised": 9873,
+      "pf": 9562,
+      "da": 6911
+    },
+    {
+      "date": "2026-07-20",
+      "weekday": "Mon",
+      "realised": 23907,
+      "pf": 14231,
+      "da": 16734
+    },
+    {
+      "date": "2026-07-21",
+      "weekday": "Tue",
+      "realised": 11404,
+      "pf": 19455,
+      "da": 7982
+    },
+    {
+      "date": "2026-07-22",
+      "weekday": "Wed",
+      "realised": 11970,
+      "pf": 22771,
+      "da": 8379
+    },
+    {
+      "date": "2026-07-23",
+      "weekday": "Thu",
+      "realised": 14289,
+      "pf": 11753,
+      "da": 10002
+    },
+    {
+      "date": "2026-07-24",
+      "weekday": "Fri",
+      "realised": 13613,
+      "pf": 14739,
+      "da": 9529
+    },
+    {
+      "date": "2026-07-25",
+      "weekday": "Sat",
+      "realised": 20697,
+      "pf": 30626,
+      "da": 14487
+    },
+    {
+      "date": "2026-07-26",
+      "weekday": "Sun",
+      "realised": 22376,
+      "pf": 30858,
+      "da": 15663
+    },
+    {
+      "date": "2026-07-27",
+      "weekday": "Mon",
+      "realised": 14159,
+      "pf": 23197,
+      "da": 9911
+    },
+    {
+      "date": "2026-07-28",
+      "weekday": "Tue",
+      "realised": 7007,
+      "pf": 14842,
+      "da": 4904
+    },
+    {
+      "date": "2026-07-29",
+      "weekday": "Wed",
+      "realised": 25330,
+      "pf": 22069,
+      "da": 17731
+    }
+  ]
+}

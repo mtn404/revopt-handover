@@ -1,0 +1,16 @@
+======================================================================
+LP v6 ENSEMBLE — eval (revenue at ACTUAL prices)
+======================================================================
+Days dispatched: 1,612
+Total revenue:   GBP 6,435,738
+  DA leg:        GBP 519,021
+  Imbalance:     GBP 203,785
+  Ancillary:     GBP 5,878,484
+  Degradation:   GBP 165,552
+
+Per-year revenue:
+  2022: days=365  total=GBP    2,241,276  DA=    318,676  imb=   -87,951  anc= 2,054,561
+  2023: days=365  total=GBP    1,175,152  DA=    -94,111  imb=   236,059  anc= 1,071,100
+  2024: days=366  total=GBP      929,643  DA=     73,623  imb=    66,632  anc=   824,157
+  2025: days=365  total=GBP    1,442,236  DA=    151,436  imb=     4,845  anc= 1,320,437
+  2026: days=151  total=GBP      647,432  DA=     69,398  imb=   -15,800  anc=   608,229

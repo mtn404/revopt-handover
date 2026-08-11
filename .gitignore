@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Pipeline runtime artefacts (regenerated from Supabase on each run)
+pipeline/data_raw/
+pipeline/data_processed/
+pipeline/data_proprietary/
+pipeline/models_cache/
+pipeline/clean_pipeline/data/raw/
+pipeline/clean_pipeline/data/proprietary/
+pipeline/clean_pipeline/data/processed/*.parquet
+!pipeline/clean_pipeline/data/processed/acceptance_rates*.parquet
+
+# Logs
+*.log

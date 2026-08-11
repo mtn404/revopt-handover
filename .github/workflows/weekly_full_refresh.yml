@@ -1,0 +1,98 @@
+name: Weekly full pipeline refresh
+
+# Sunday 02:00 UTC: runs the FULL pipeline end-to-end —
+# rebuild master parquet from raw + proprietary, walk-forward retrain all
+# 5 forecast models, solve LP + PF for the full backtest extended to
+# yesterday, re-export snapshot.json. Pushes results to Supabase + repo.
+#
+# Takes ~45-70 minutes per run.
+
+on:
+  schedule:
+    - cron: "0 2 * * 0"     # Sunday 02:00 UTC
+  workflow_dispatch:
+    inputs:
+      backfill_neso_start:
+        description: >-
+          One-off backfill: ISO date (YYYY-MM-DD) to use as the START of the
+          NESO wind + demand pull window (bypassing the usual 30-day rolling
+          window). Leave blank for normal operation. Use e.g. 2021-01-01 to
+          rebuild the historic archive after a state collapse.
+        required: false
+        default: ""
+      lp_volume_cap:
+        description: >-
+          Phase 1c bid-price optimisation VOLUME_CAP override (0.0-1.0). Default
+          production value is 0.70 (top-quartile empirical acceptance). Lower
+          values (e.g. 0.50) model a more competitive market where even
+          aggressive bids face volume constraints. Sensitivity runs only —
+          leave blank for the production default.
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  full-refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90    # walk-forward is the slow piece
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+          cache-dependency-path: pipeline/requirements_full.txt
+
+      - name: Install full pipeline deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r pipeline/requirements_full.txt
+
+      - name: Run full pipeline
+        env:
+          SUPABASE_URL:              ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_BUCKET:           ${{ vars.SUPABASE_BUCKET || secrets.SUPABASE_BUCKET }}
+          NESO_BACKFILL_START:       ${{ inputs.backfill_neso_start }}
+          LP_VOLUME_CAP:             ${{ inputs.lp_volume_cap }}
+        run: |
+          python pipeline/run_full_pipeline.py
+
+      - name: Commit refreshed snapshot
+        run: |
+          set -e
+          git config --local user.email "actions@github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/snapshot.json data/forecasts_7day.json
+          if git diff --staged --quiet; then
+            echo "No staged changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(weekly): full pipeline refresh $(date -u +%Y-%m-%d)"
+          # Stash any pipeline-generated files (raw CSVs, parquets) that
+          # gitignore should but didn't catch. Without this, rebase refuses
+          # to run with 'unstaged changes' even though they don't matter.
+          git stash --include-untracked || true
+          # While the pipeline was running (~30 min), other commits may have
+          # landed on main. Rebase our snapshot commit on top before pushing.
+          git pull --rebase origin main || true
+          # Retry the push a few times to survive transient races.
+          for i in 1 2 3; do
+            if git push; then
+              echo "Push succeeded on attempt $i"
+              break
+            fi
+            echo "Push attempt $i failed, refetching and rebasing..."
+            git pull --rebase origin main || true
+            sleep 5
+          done
+          # Restore stash if it exists (harmless if it doesn't)
+          git stash pop || true

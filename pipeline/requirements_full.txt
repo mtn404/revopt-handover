@@ -1,0 +1,29 @@
+# Full pipeline deps for the WEEKLY refresh job.
+# Used by run_full_pipeline.py which invokes all the vendored clean-pipeline
+# scripts (build_master, retrain_*, lp_v6_ensemble, compute_pf_v6, export).
+#
+# Pinned to versions that match the local dev environment so model fits are
+# numerically identical between the dissertation backtest and CI runs.
+
+# Core
+pandas>=2.0,<3.0
+numpy>=1.24,<3.0
+requests>=2.31
+fastparquet>=2024.5.0
+pyarrow>=17.0            # preferred parquet engine — more permissive than fastparquet
+openpyxl>=3.1            # for Spectron .xlsx reads
+xlrd>=2.0                # legacy .xls fallback
+
+# Modelling
+scikit-learn>=1.4,<2.0
+lightgbm>=4.0,<5.0
+xgboost>=2.0,<4.0
+
+# Optimisation
+pulp>=2.7
+
+# Calendar
+holidays>=0.30           # UK public holiday calendar for is_holiday feature
+
+# Live state
+supabase>=2.7.0

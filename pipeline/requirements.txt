@@ -1,0 +1,10 @@
+# Live MVP refresh deps — kept minimal so the daily cron stays fast.
+# Heavier deps (lightgbm, xgboost, scikit-learn, fastparquet) are added by
+# refresh_snapshot.py only when the cached-models path is taken.
+
+pandas>=2.0
+requests>=2.31
+numpy>=1.24
+pulp>=2.7
+fastparquet>=2024.5.0
+supabase>=2.7.0

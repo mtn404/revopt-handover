@@ -1,0 +1,117 @@
+name: Daily wind forecast pull
+
+# Runs each morning at 09:15 UTC — 30 minutes after NESO publishes today's
+# day-ahead wind forecast (~08:40 UTC). Pulls last 14 days of wind forecast
+# from BOTH the historic archive and the live day-ahead endpoint, merges
+# them, and pushes the updated CSV to Supabase state.
+#
+# Purpose: ensure the historic archive of day-ahead wind forecasts stays
+# continuously populated between weekly full-pipeline refreshes. This
+# prevents Model A coverage holes on recent days if a weekly cron slips.
+#
+# Takes ~2-3 minutes per run.
+
+on:
+  schedule:
+    - cron: "15 9 * * *"     # daily 09:15 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  wind-pull:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: pipeline/requirements.txt
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r pipeline/requirements.txt
+
+      - name: Install supabase-py
+        run: pip install supabase
+
+      - name: Pull existing wind + demand CSVs from Supabase state
+        env:
+          SUPABASE_URL:              ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_BUCKET:           ${{ vars.SUPABASE_BUCKET || secrets.SUPABASE_BUCKET }}
+        run: |
+          python -c "
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'pipeline')
+          from supabase_io import download
+          RAW = Path('pipeline/clean_pipeline/data/raw')
+          RAW.mkdir(parents=True, exist_ok=True)
+          # Download existing CSVs (if present) so pull_neso_forecasts merges with
+          # the accumulated history instead of starting fresh. Without this step
+          # the daily pull overwrites the multi-year archive with only 14 days,
+          # causing Model A LEAR to skip every prediction (dropna removes rows
+          # without gas/wind/demand across the full training window).
+          for name in ['neso_da_wind_forecast.csv', 'neso_da_demand_forecast.csv']:
+              ok = download(f'raw/{name}', RAW / name)
+              size = (RAW / name).stat().st_size if ok else 0
+              print(f'  {\"[ok]\" if ok else \"[miss]\"} raw/{name}  ({size/1e6:.1f} MB)')
+          "
+
+      - name: Pull wind + demand forecasts (last 14 days + tomorrow)
+        env:
+          SUPABASE_URL:              ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_BUCKET:           ${{ vars.SUPABASE_BUCKET || secrets.SUPABASE_BUCKET }}
+        run: |
+          python -c "
+          import sys, os
+          from datetime import date, timedelta
+          from pathlib import Path
+          # Route CSV writes to the clean_pipeline raw dir so build_master picks them up.
+          os.environ['PIPELINE_RAW_DIR'] = str(Path('pipeline') / 'clean_pipeline' / 'data' / 'raw')
+          Path(os.environ['PIPELINE_RAW_DIR']).mkdir(parents=True, exist_ok=True)
+          sys.path.insert(0, 'pipeline')
+          from pull_incremental import pull_neso_forecasts
+          today = date.today()
+          start = today - timedelta(days=14)
+          end   = today + timedelta(days=2)
+          print(f'[daily_wind_pull] window {start} -> {end}')
+          pull_neso_forecasts(start, end)
+          print('[daily_wind_pull] complete')
+          "
+
+      - name: Push refreshed wind CSVs to Supabase
+        env:
+          SUPABASE_URL:              ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_BUCKET:           ${{ vars.SUPABASE_BUCKET || secrets.SUPABASE_BUCKET }}
+        run: |
+          # Upload the two refreshed CSVs (if supabase state module exists).
+          # This mirrors what run_full_pipeline.py does for its own writes.
+          python -c "
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'pipeline')
+          from supabase_io import upload
+          RAW = Path('pipeline/clean_pipeline/data/raw')
+          for name in ['neso_da_wind_forecast.csv', 'neso_da_demand_forecast.csv']:
+              p = RAW / name
+              if p.exists():
+                  key = f'raw/{name}'
+                  upload(p, key)
+                  print(f'  uploaded {p} -> {key}')
+              else:
+                  print(f'  (skip) {p} not found')
+          "

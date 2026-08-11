@@ -1,0 +1,15 @@
+======================================================================
+PF v6 — architecture-matched oracle
+======================================================================
+Days solved:   1,612
+Total revenue: GBP 80,801,811
+  DA:          GBP 12,254,762
+  Imbalance:   GBP 5,279,553
+  Ancillary:   GBP 65,784,467
+  Degradation: GBP 2,516,971
+
+  2022: days=365  total=GBP   29,673,716
+  2023: days=365  total=GBP   15,825,827
+  2024: days=366  total=GBP   11,156,473
+  2025: days=365  total=GBP   16,793,633
+  2026: days=151  total=GBP    7,352,162

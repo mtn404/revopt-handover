@@ -1,0 +1,115 @@
+name: Rebuild snapshot only
+
+# Fast path: skip the ~50-min pipeline and just re-run the export step against
+# the parquets currently on Supabase. Use when only export_to_mvp_snapshot.py
+# has changed (schema tweaks, new KPI fields, etc.) and the underlying LP/PF
+# artefacts don't need to be recomputed.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+          cache-dependency-path: pipeline/requirements_full.txt
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r pipeline/requirements_full.txt
+
+      - name: Pull parquets + supporting state from Supabase
+        env:
+          SUPABASE_URL:              ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_BUCKET:           ${{ vars.SUPABASE_BUCKET || secrets.SUPABASE_BUCKET }}
+        run: |
+          python -c "
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, 'pipeline')
+          from supabase_io import sync_down, PARQUET_FILES, PROPRIETARY_FILES
+          PROC = Path('pipeline/clean_pipeline/data/processed')
+          PROP = Path('pipeline/clean_pipeline/data/proprietary')
+          r1 = sync_down(PROC, 'parquets', PARQUET_FILES)
+          r2 = sync_down(PROP, 'proprietary', PROPRIETARY_FILES)
+          print(f'  parquets    : {sum(r1.values())}/{len(PARQUET_FILES)}')
+          print(f'  proprietary : {sum(r2.values())}/{len(PROPRIETARY_FILES)}')
+          "
+
+      - name: Run export step (writes directly to repo-root data/snapshot.json)
+        env:
+          SUPABASE_URL:              ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_BUCKET:           ${{ vars.SUPABASE_BUCKET || secrets.SUPABASE_BUCKET }}
+          MVP_SNAPSHOT_OUT:          ${{ github.workspace }}/data/snapshot.json
+        run: |
+          mkdir -p data
+          python pipeline/clean_pipeline/05_eval/export_to_mvp_snapshot.py
+
+      - name: Mark snapshot as live
+        run: |
+          python -c "
+          import json
+          p = 'data/snapshot.json'
+          d = json.load(open(p))
+          d.setdefault('freshness', {})['pipeline_mode'] = 'live'
+          json.dump(d, open(p, 'w'), indent=2)
+          print(f'  ✓ marked as live')
+          "
+
+      - name: Push snapshot + forecasts_7day to Supabase
+        env:
+          SUPABASE_URL:              ${{ vars.SUPABASE_URL || secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_BUCKET:           ${{ vars.SUPABASE_BUCKET || secrets.SUPABASE_BUCKET }}
+        run: |
+          python -c "
+          import sys
+          from pathlib import Path
+          from datetime import datetime, timezone
+          sys.path.insert(0, 'pipeline')
+          from supabase_io import upload
+          latest = Path('data/snapshot.json')
+          if latest.exists():
+              upload(latest, 'snapshots/latest.json')
+              stamp = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+              upload(latest, f'snapshots/snapshot_{stamp}.json')
+              print('  snapshot   : pushed latest + dated')
+          "
+
+      - name: Commit and push snapshot to main
+        run: |
+          set -e
+          git config --local user.email "actions@github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/snapshot.json data/forecasts_7day.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "No staged changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(export): rebuild snapshot with rolling 12m KPIs $(date -u +%Y-%m-%d)"
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          for i in 1 2 3; do
+            git push && break
+            git pull --rebase origin main || true
+            sleep 5
+          done
+          git stash pop || true
