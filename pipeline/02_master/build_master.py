@@ -264,7 +264,7 @@ def main():
     #
     # Two source paths:
     #   (a) Pre-aggregated boalf_aggregates.csv (~17 MB)  — preferred in live
-    #       mode. Produced by pipeline/aggregate_boalf.py.
+    #       mode. Produced by pipeline/01_ingestion/aggregate_boalf.py.
     #   (b) Raw bmrs_boalf.csv (~2.4 GB) — used locally during initial pipeline
     #       construction. Chunked-aggregation, same output schema.
     # Either source produces the same 6 boalf_* columns joined onto df.

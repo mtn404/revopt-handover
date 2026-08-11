@@ -37,7 +37,7 @@ NESO = "https://api.neso.energy/api/3/action"
 CI   = "https://api.carbonintensity.org.uk"
 
 HERE = Path(__file__).resolve().parent
-# Allow run_full_pipeline.py to redirect output to clean_pipeline/data/raw/
+# Allow run_full_pipeline.py to redirect output to pipeline/data/raw/
 import os as _os
 RAW = Path(_os.environ.get("PIPELINE_RAW_DIR") or (HERE / "data_raw"))
 RAW.mkdir(parents=True, exist_ok=True)

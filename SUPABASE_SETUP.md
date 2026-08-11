@@ -31,23 +31,23 @@ From your laptop, inside the MVP repo:
 # PowerShell
 $env:SUPABASE_URL = "https://xxxx.supabase.co"
 $env:SUPABASE_SERVICE_ROLE_KEY = "eyJ..."
-py -3.13 -m pip install -r pipeline/requirements.txt
-py -3.13 pipeline/bootstrap_supabase.py
+py -3.13 -m pip install -r requirements.txt
+py -3.13 pipeline/orchestration/bootstrap_supabase.py
 ```
 
 ```bash
 # bash / WSL
 export SUPABASE_URL="https://xxxx.supabase.co"
 export SUPABASE_SERVICE_ROLE_KEY="eyJ..."
-python -m pip install -r pipeline/requirements.txt
-python pipeline/bootstrap_supabase.py
+python -m pip install -r requirements.txt
+python pipeline/orchestration/bootstrap_supabase.py
 ```
 
 This will:
 
 - Create the `bess-mvp` bucket (private — only accessible with your service-role key)
-- Upload every parquet from `../clean-pipeline/data/processed/`
-- Upload Spectron NBP gas, UKA carbon, DA prices from `../clean-pipeline/data/proprietary/`
+- Upload every parquet from `pipeline/data/processed/`
+- Upload Spectron NBP gas, UKA carbon, DA prices from `pipeline/data/proprietary/`
 - Upload the current `data/snapshot.json` to `snapshots/latest.json` and
   `snapshots/snapshot_YYYY-MM-DD.json`
 - Write `models_cache/last_retrained.txt` with today's date as a sentinel

@@ -219,7 +219,7 @@ def step_run_pipeline(live_end: str) -> bool:
     env = os.environ.copy()
     env["LIVE_TEST_END"] = live_end
     env["PYTHONUTF8"] = "1"
-    # Override the vendored exporters' output paths so writes land in revopt-mvp/data/
+    # Override the vendored exporters' output paths so writes land in data/
     env["MVP_SNAPSHOT_OUT"]  = str(SNAPSHOT)
     env["MVP_FORECASTS_OUT"] = str(REPO_ROOT / "data" / "forecasts_7day.json")
     sequence = [
@@ -242,8 +242,8 @@ def step_run_pipeline(live_end: str) -> bool:
 
 
 def step_relocate_snapshot():
-    """The vendored exporter writes to ../revopt-mvp/data/snapshot.json
-    by default. Verify it ended up in the right place."""
+    """The vendored exporter writes to REPO_ROOT/data/snapshot.json
+    (or the MVP_SNAPSHOT_OUT env var if set). Verify it landed."""
     log("STEP 4: verify snapshot.json was written")
     if not SNAPSHOT.exists():
         log(f"  ! {SNAPSHOT} not found after export")
