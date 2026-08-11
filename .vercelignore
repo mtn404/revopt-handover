@@ -1,0 +1,6 @@
+backend/
+.github/
+.next/
+node_modules/
+README.md
+DEPLOY.md

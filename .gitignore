@@ -1,3 +1,13 @@
+# Node / Next.js (MVP dashboard)
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+.vercel/
+.pnp
+.pnp.js
+
 # Python
 __pycache__/
 *.py[cod]

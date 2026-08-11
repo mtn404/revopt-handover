@@ -38,6 +38,11 @@ end-to-end run recipe.
 │   └── SUPABASE_SETUP.md    — Supabase bucket / table schema
 ├── data/                    — reference outputs (snapshot.json,
 │                              forecasts_7day.json) from a recent run
+├── app/, components/, lib/, public/  — Next.js dashboard (MVP reference impl)
+├── backend/                 — FastAPI backend serving snapshot.json
+├── package.json, next.config.js, tsconfig.json, tailwind.config.ts, postcss.config.js
+│                            — MVP build config
+├── DEPLOY.md                — MVP deployment notes (Vercel)
 └── .github/workflows/       — CI/CD
     ├── weekly_full_refresh.yml  — Sun 02:00 UTC full retrain
     ├── daily_refresh.yml        — daily snapshot top-up
@@ -45,11 +50,17 @@ end-to-end run recipe.
     └── rebuild_snapshot.yml     — manual snapshot rebuild
 ```
 
+## MVP dashboard — reference only
+
+The `app/`, `backend/`, and MVP config files are a Next.js + FastAPI reference
+implementation built during the dissertation to visualise pipeline output.
+Utilidex is not expected to deploy this as-is — it is included so Utilidex
+engineers can see how `data/snapshot.json` is consumed. Vercel configuration
+was stripped from the workflows so nothing tries to deploy on Utilidex's
+behalf.
+
 ## Not included
 
-- **MVP dashboard** (Next.js frontend + FastAPI backend + Vercel deployment) —
-  built as a dissertation-era demo, not production-quality. Utilidex has its own
-  product surface.
 - **Dissertation submission artefacts** — model cards, thesis figures, AI usage
   audit. Available on request if needed for reference.
 

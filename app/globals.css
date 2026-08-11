@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  background: theme("colors.bg.DEFAULT");
+  color: theme("colors.fg.DEFAULT");
+  font-family: theme("fontFamily.sans");
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: theme("colors.bg.DEFAULT");
+}
+::-webkit-scrollbar-thumb {
+  background: theme("colors.bg.border");
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: theme("colors.fg.subtle");
+}
+
+/* Recharts tooltip override (light theme) */
+.recharts-default-tooltip {
+  background-color: theme("colors.bg.surface") !important;
+  border: 1px solid theme("colors.bg.border") !important;
+  border-radius: 8px !important;
+  color: theme("colors.fg.DEFAULT") !important;
+  font-size: 12px !important;
+  padding: 8px 12px !important;
+  box-shadow: 0 4px 12px rgba(15, 30, 55, 0.10) !important;
+}
+.recharts-tooltip-label {
+  color: theme("colors.fg.muted") !important;
+  margin-bottom: 4px !important;
+}
+.recharts-cartesian-grid line {
+  stroke: theme("colors.bg.border") !important;
+  stroke-opacity: 0.7 !important;
+}
+.recharts-text {
+  fill: theme("colors.fg.muted") !important;
+  font-size: 11px !important;
+}
+
+/* Numeric tabular display */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
